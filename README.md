@@ -20,9 +20,13 @@ Gästboksinläggen sparas i en **JSON-fil**, vilket gör att inlägg bevaras mel
 
 ### Menyval
 När programmet körs visas följande meny:
-1. Lägg till ett inlägg
-2. Ta bort ett inlägg
-X. Avsluta
+### Menyval
+När programmet körs visas följande meny:
+
+ - Lägg till ett inlägg (1)
+ - Ta bort ett inlägg (2)
+ - Avsluta (X)
+
 
 ### Kommandon
 - Tryck på **1** för att lägga till ett nytt inlägg. Du uppmanas att ange ditt namn och din kommentar. Om något fält lämnas tomt, måste du försöka igen.
@@ -34,7 +38,7 @@ Varje inlägg består av två fält:
   - **Namn**: Ägaren till inlägget.
   - **Kommentar**: Själva inlägget.
 
-Inläggen visas i formatet:
+Inläggen visas i följande format:
 
 [0] Jonas - Jävla Potatishummer!  
 [1] Postatishummern - Jävla Jonas!
