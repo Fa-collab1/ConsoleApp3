@@ -1,9 +1,6 @@
-﻿using System;
-using System.Runtime.ConstrainedExecution;
-
-namespace ConsoleApp3
+﻿namespace ConsoleApp3
 {
-        class Program
+    class Program
         {
             static void Main()
             {
@@ -11,20 +8,18 @@ namespace ConsoleApp3
                 int i;
 
                 while (true)
-                {
-                    Console.Clear(); // rensar skärmen
+            {
+                Console.Clear(); // rensar skärmen
                 Console.CursorVisible = false; // gömmer markören
                 Console.WriteLine("J o n a s   G ä s t b o k\n\n"); // skriver ut rubrik
 
+                Console.WriteLine("Möjliga val:"); // skriver ut menyval
                 Console.WriteLine("1. Skriv i gästboken"); // skriver ut menyval
-                Console.WriteLine("2. Ta bort inlägg\n");
-                    Console.WriteLine("X. Avsluta\n");
+                Console.WriteLine("2. Ta bort inlägg");
+                Console.WriteLine("X. Avsluta\n\n");
 
-                    i = 0; // räknare för att skriva ut index
-                foreach (GuestbookEntry guestbookText in guestbook.GetGuestbookEntries()) // loopar igenom alla inlägg i gästboken
-                { 
-                        Console.WriteLine("[" + i++ + "] " + guestbookText.Name + " - " + guestbookText.Comment); // skriver ut inlägg. Namn följt av kommentar med " - " emellan
-                }
+                PrintGuestbookEntries(guestbook); // skriver ut inlägg i gästboken
+
                 int? inp = null; // sätter inmatning till null
                 var key = Console.ReadKey(true).Key; // läser in knapptryck
 
@@ -76,41 +71,55 @@ namespace ConsoleApp3
 
                             if (String.IsNullOrEmpty(comment) || comment.Length < 1) // om kommentar är tomt eller mindre än 1 tecken så skriv ut felmeddelande
                             {
-                            Console.WriteLine("Du måste skriva en kommentar!\n"); // skriv ut felmeddelande
+                                Console.WriteLine("Du måste skriva en kommentar!\n"); // skriv ut felmeddelande
                                 Console.WriteLine("Tryck på valfri knapp för att försöka igen..."); // skriv ut instruktion för att försöka igen
                                 Console.ReadKey(); // läs in knapptryck för att komma vidare
                                 Console.Clear(); // rensa skärmen
                                 Console.WriteLine("Ditt namn: " + name + "\n"); // skriv ut redan inmatad data, dvs namn följt av :
                             }
-                }
+                        }
 
-                        guestbook.AddGuestbookEntry(name,comment); // lägg till det godkända inlägget i gästboken
+                        guestbook.AddGuestbookEntry(name, comment); // lägg till det godkända inlägget i gästboken
                         break; // bryt switch-satsen
                     case 2:
-                            Console.CursorVisible = true; // visa markören
+                        Console.Clear();
+                        PrintGuestbookEntries(guestbook);
+
+                        Console.CursorVisible = true; // visa markören
                         Console.Write("\nAnge index att radera: "); // skriv ut fråga
                         string? index = Console.ReadLine(); // läs in index
                         if (!String.IsNullOrEmpty(index)) // om index inte är tomt så försök ta bort inlägg
                             try
-                                {
-                                    guestbook.DelEntry(Convert.ToInt32(index)); // försök ta bort inlägg
-                            }
-                                catch (Exception) // om det inte går att ta bort inlägg så skriv ut felmeddelande
                             {
-                                    Console.WriteLine("\n\nNu försökte du ta bort någonting som inte fanns!\n\nTryck på valfri knapp för att komma tillbaka till menyn...");
-                                    Console.ReadKey(); // läs in knapptryck för att komma vidare
+                                guestbook.DelEntry(Convert.ToInt32(index)); // försök ta bort inlägg
+                            }
+                            catch (Exception) // om det inte går att ta bort inlägg så skriv ut felmeddelande
+                            {
+                                Console.WriteLine("\n\nNu försökte du ta bort någonting som inte fanns!\n\nTryck på valfri knapp för att komma tillbaka till menyn...");
+                                Console.ReadKey(); // läs in knapptryck för att komma vidare
                                 Console.Clear();     // rensa skärmen
                             }
-                            break; // bryt switch-satsen
+                        break; // bryt switch-satsen
                     case 88: // om inmatning är 88 (dvs X)
                         Environment.Exit(0); // avsluta programmet
                         break; // bryt switch-satsen
                 }
 
-                }
-
             }
+
         }
+
+        private static void PrintGuestbookEntries(Guestbook guestbook) // metod för att skriva ut inlägg i gästboken
+        {
+            int i=0;
+            i = 0; // räknare för att skriva ut index
+            Console.WriteLine("Gästboksinlägg:");
+            foreach (GuestbookEntry guestbookText in guestbook.GetGuestbookEntries()) // loopar igenom alla inlägg i gästboken
+            {
+                Console.WriteLine("[" + i++ + "] " + guestbookText.Name + " - " + guestbookText.Comment); // skriver ut inlägg. Namn följt av kommentar med " - " emellan
+            };
+        }
+    }
     }
 
 // koden bygger mycket på exempelet från föreläsningen
